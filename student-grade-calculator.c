@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 
 typedef struct
 {
@@ -97,7 +98,9 @@ int main()
         printf("3. Show average\n");
         printf("4. Show highest student\n");
         printf("5. Show lowest student\n");
-        printf("6. Exit\n");
+        printf("6. Search student by name\n");
+        printf("7. Exit\n");
+
 
         printf("Choose: ");
         if (scanf("%d", &choice) != 1)
@@ -203,6 +206,24 @@ int main()
             break;
             }
         case 6:
+            //search student by name
+            printf("Enter the name of student you are looking for: \n");
+            char searchName[50];
+            scanf("%49s", searchName);
+            for (int i = 0; i < studentCount; i++)
+            {
+                
+                if (strcmp(searchName, students[i].name) == 0)
+                {
+                    printf("The user you are looking for is %s, and her/his grade is: %d",
+                        students[i].name, students[i].grade);
+                }
+                    printf("The user you are looking for does not exist. \n");
+                    break;
+            }
+            
+            break;
+        case 7:
             printf("Exiting...\n");
             break;
         default:
