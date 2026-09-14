@@ -1,0 +1,1 @@
+Simple calculator for calculating average, highest and lowest grade.
