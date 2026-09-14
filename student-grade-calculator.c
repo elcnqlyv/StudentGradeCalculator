@@ -86,9 +86,55 @@ int findLowestStudentIndex(Student students[], int studentCount)
 
 int main()
 {
-
     Student students[10];
     int studentCount;
+    int choice;
+
+    do
+    {
+        printf("\n1. Add students\n");
+        printf("2. List students\n");
+        printf("3. Show average\n");
+        printf("4. Show highest student\n");
+        printf("5. Show lowest student\n");
+        printf("6. Exit\n");
+
+        printf("Choose: ");
+        scanf("%d", &choice);
+
+        switch (choice)
+        {
+        case 1:
+            //add students
+            break;
+        case 2:
+            // list students
+            break;
+
+        case 3:
+            // average
+            break;
+
+        case 4:
+            // highest
+            break;
+
+        case 5:
+            // lowest
+            break;
+        case 6:
+            printf("Exiting...\n");
+            break;
+        default:
+            printf("Invalid choice.\n");
+            break;
+        }
+
+    } while (choice !=6);
+    
+
+
+   
 
     printf("How many students there will be?\n");
     scanf("%d", &studentCount);
