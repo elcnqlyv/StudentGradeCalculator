@@ -87,12 +87,12 @@ int findLowestStudentIndex(Student students[], int studentCount)
 int main()
 {
     Student students[10];
-    int studentCount;
+    int studentCount = 0;
     int choice;
 
     do
     {
-        printf("\n1. Add students\n");
+        printf("\n1. Add student\n");
         printf("2. List students\n");
         printf("3. Show average\n");
         printf("4. Show highest student\n");
@@ -100,28 +100,108 @@ int main()
         printf("6. Exit\n");
 
         printf("Choose: ");
-        scanf("%d", &choice);
+        if (scanf("%d", &choice) != 1)
+        {
+            printf("Please enter a number between 1 and 6.\n");
+        
+            int ch = getchar();
+        
+            while (ch != '\n' && ch != EOF)
+            {
+                ch = getchar();
+            }
+        
+            continue;
+        }
 
         switch (choice)
         {
         case 1:
             //add students
-            break;
+            {
+            if (studentCount>=10)
+            {
+                printf("Student list is full.\n");
+                break;
+            }
+                                   
+            printf("Student name: ");
+            scanf("%49s", students[studentCount].name);
+
+            printf("Grade: ");
+            if (scanf("%d", &students[studentCount].grade) != 1)
+            {
+                printf("Grade must be a number.\n");
+                int ch = getchar();
+                while (ch != '\n' && ch != EOF)
+                {
+                    ch = getchar();
+                }
+                break;
+            }
+        
+            if (students[studentCount].grade < 0 || students[studentCount].grade > 100)
+            {
+                printf("Grade must be between 0 and 100.\n");
+                break;
+            }
+            studentCount++;
+            printf("Student added successfully. \n");
+            break; 
+            }
         case 2:
             // list students
+            if (studentCount == 0)
+            {
+                printf("No students have been added yet.\n");
+                break;
+            }
+            for (int i = 0; i < studentCount; i++)
+            {
+                printf("Name of student: %s\n", students[i].name);
+                printf("Grade of the student: %d\n", students[i].grade);
+            }
             break;
-
         case 3:
             // average
+            if (studentCount == 0)
+            {
+                printf("No students have been added yet.\n");
+                break;
+            }
+            {
+            float average = calculateAverage(students, studentCount);
+            printf("Average grade is: %.2f\n", average);
             break;
-
+            }
         case 4:
             // highest
+            if (studentCount == 0)
+            {
+                printf("No students have been added yet.\n");
+                break;
+            }
+            {
+            int highestGrade = findHighestGrade(students, studentCount);
+            int highestIndex = findHighestStudentIndex(students, studentCount);
+            printf("Highest grade is: %d\n", highestGrade);
+            printf("Highest student is: %s\n", students[highestIndex].name);
             break;
-
+            }
         case 5:
             // lowest
+            {
+            if (studentCount == 0)
+            {
+                printf("No students have been added yet.\n");
+                break;
+            }
+            int lowestGrade = findLowestGrade(students, studentCount);
+            int lowestIndex = findLowestStudentIndex(students, studentCount);
+            printf("Lowest grade is: %d\n", lowestGrade);
+            printf("Lowest student is: %s\n", students[lowestIndex].name);
             break;
+            }
         case 6:
             printf("Exiting...\n");
             break;
@@ -132,51 +212,4 @@ int main()
 
     } while (choice !=6);
     
-
-
-   
-
-    printf("How many students there will be?\n");
-    scanf("%d", &studentCount);
-
-    if (studentCount >= 1 && studentCount <= 10)
-    {
-        for (int i = 0; i < studentCount; i++)
-        {
-            printf("Student %d name: ", i + 1);
-            scanf("%49s", students[i].name);
-            printf("Grade: ");
-            scanf("%d", &students[i].grade);
-
-        }
-        printf("\nYou entered:\n");
-
-        for (int i = 0; i < studentCount; i++)
-        {
-            printf("%s - %d\n", students[i].name, students[i].grade);
-        }
-        
-        float average = calculateAverage(students, studentCount);
-        printf("Average grade: %.2f\n", average);
-
-        int highest = findHighestGrade(students, studentCount);
-        printf("Highest grade is: %d\n", highest);
-
-        int lowest = findLowestGrade(students, studentCount);
-        printf("Lowest grade is: %d\n", lowest);
-
-        int highestIndex = findHighestStudentIndex(students, studentCount);
-        printf("Highest grade student is: %s and grade is %d\n", students[highestIndex].name, students[highestIndex].grade);
-
-        int lowestIndex = findLowestStudentIndex(students, studentCount);
-        printf("Lowest grade student is: %s and grade is %d\n", students[lowestIndex].name, students[lowestIndex].grade);
-    }
-    else
-    {
-        printf("Student count must be between 1 and 10.\n");
-    }
-
-    
-    return 0;
-
 }
