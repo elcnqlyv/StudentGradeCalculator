@@ -1,24 +1,25 @@
 #include <stdio.h>
 #include <string.h>
 
-void del(int students[], int *studentCount, int searchedName)
-{
-    int i = 0; 
-    while (students[i] != searchedName) i++;
 
-    for (int j = i; j < *studentCount; j++)
-    {
-        students[j] = students[j + 1];
-    }
-    
-    
-}
 
 typedef struct
 {
     char name[50];
     int grade;
 } Student;
+
+void deleteStudent(Student students[], int *studentCount, int index)
+{
+    for (int i = index; i < *studentCount; i++)
+    {
+        students[i] = students[i + 1];
+    }
+
+    (*studentCount)--;
+    
+    
+}
 
 float calculateAverage(Student students[], int studentCount)
 {
@@ -221,8 +222,15 @@ int main()
             }
         case 6:
             //search student by name
-            printf("Enter the name of student you are looking for: \n");
+            {
+            if (studentCount == 0)
+            {
+                printf("No students have been added yet. \n");
+                break;
+            }
             char searchName[50];
+            int found = 0;    
+            printf("Enter the name of student you are looking for: \n");
             scanf("%49s", searchName);
             for (int i = 0; i < studentCount; i++)
             {
@@ -231,30 +239,58 @@ int main()
                 {
                     printf("The user you are looking for is %s, and her/his grade is: %d",
                         students[i].name, students[i].grade);
-                }
-                    printf("The user you are looking for does not exist. \n");
+                    found = 1;
                     break;
+                }
+            }
+            if (found == 0)
+            {
+                printf("The user you are looking for does not exist. \n");
             }
             
             break;
+        }
         case 7:
             //delete function
+            {
+                 if (studentCount == 0)
+                {
+                    printf("No students have been added yet.\n");
+                    break;
+                }
+            char deleteName[50];
+            int found = 0;
+
             printf("Enter the name of student you are looking for: \n");
-            char searchName[50];
-            scanf("%49s", searchName);
+            scanf("%49s", deleteName);
             for (int i = 0; i < studentCount; i++)
             {
                 
-                if (strcmp(searchName, students[i].name) == 0)
+                if (strcmp(deleteName, students[i].name) == 0)
                 {
-                    printf("The user you are looking for is %s, and her/his grade is: %d",
+                    printf("Deleting %s with grade: %d",
                         students[i].name, students[i].grade);
-                    
-                }
-                    printf("The user you are looking for does not exist. \n");
+                    deleteStudent(students, &studentCount, i);
+
+                    found = 1;
                     break;
+
+                    //for (int i = 0; i < n; i++)
+                    //{
+                    //    printf("%d ", students[i]);
+                    //}
+                    
+
+                }
+                    
             }
+            if (found == 0)
+            {
+                printf("The user you are looking for does not exist. \n");
+            }
+            
             break;
+            }
         case 8:
             printf("Exiting...\n");
             break;
@@ -263,6 +299,6 @@ int main()
             break;
         }
 
-    } while (choice !=6);
+    } while (choice !=8);
     
 }
